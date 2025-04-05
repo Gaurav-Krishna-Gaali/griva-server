@@ -8,9 +8,11 @@ app = Flask(__name__)
 
 # Initialize Picamera2
 picam2 = Picamera2()
-video_config = picam2.create_video_configuration(main={"size": (640, 480)})
+# video_config = picam2.create_video_configuration(main={"size": (640, 480)})
+video_config = picam2.create_video_configuration(main={"size": (1280, 800), "format": "BGR888"})
 picam2.configure(video_config)
 picam2.start()
+picam2.set_controls({"AwbMode": 1})
 
 # Apply Auto White Balance
 picam2.set_controls({"AwbMode": 1})
@@ -18,7 +20,7 @@ picam2.set_controls({"AwbMode": 1})
 def generate_frames():
     while True:
         frame = picam2.capture_array()
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
+        # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
 
@@ -71,7 +73,8 @@ def autofocus():
 def capture():
     try:
         frame = picam2.capture_array()
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
+        
+        # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         _, img_encoded = cv2.imencode('.jpg', frame)
         return Response(
             img_encoded.tobytes(),
@@ -80,6 +83,6 @@ def capture():
     except Exception as e:
         print(f"Capture error: {e}")
         return str(e), 500
-        
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
