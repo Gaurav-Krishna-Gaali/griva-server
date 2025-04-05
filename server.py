@@ -67,5 +67,19 @@ def autofocus():
         print(e)
         return str(e), 500
 
+@app.route('/capture', methods=['GET'])
+def capture():
+    try:
+        frame = picam2.capture_array()
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
+        _, img_encoded = cv2.imencode('.jpg', frame)
+        return Response(
+            img_encoded.tobytes(),
+            mimetype='image/jpeg'
+        )
+    except Exception as e:
+        print(f"Capture error: {e}")
+        return str(e), 500
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)
