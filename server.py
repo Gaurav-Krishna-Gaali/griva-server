@@ -16,7 +16,7 @@ picam2.start()
 picam2.set_controls({
     "AwbMode": 0,  # Manual white balance
     "AnalogueGain": 1.0,  # Reduce overall gain
-    "ColourGains": (1.5, 2.0)  # Adjust red and blue gains to counter yellow tint
+    # "ColourGains": (1.5, 2.0)  # Adjust red and blue gains to counter yellow tint
 })
 
 # Apply Auto White Balance
@@ -25,7 +25,9 @@ picam2.set_controls({"AwbMode": 1})
 def generate_frames():
     while True:
         frame = picam2.capture_array()
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
+        scale = 153 / 255.0
+        frame = cv2.convertScaleAbs(frame, alpha=scale, beta=0)
+        # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
 
