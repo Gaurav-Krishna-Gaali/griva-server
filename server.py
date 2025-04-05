@@ -57,10 +57,11 @@ def video_feed():
 @app.route('/autofocus', methods=['POST'])
 def autofocus():
     try:
-        picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})  # 1 = Auto
+        # picam2.set_controls({"AfMode": controls.AfModeEnum.Continuous})  # 1 = Auto
+        picam2.set_controls({"AfMode": 0})
+        picam2.set_controls({"AfMode": 1})
+        picam2.set_controls({"AfTrigger": 0})
         print("Autofoucs Triggered")
-        # picam2.set_controls({"AfMode": 1})  # 1 = Auto
-        # picam2.set_controls({"AfTrigger": 1})  # 1 = Auto
         return "OK", 200
     except Exception as e:
         print(e)
