@@ -19,7 +19,7 @@ def generate_frames():
         frame = picam2.capture_array()
         # scale = 153 / 255.0
         scale = 1.0
-        frame = cv2.convertScaleAbs(frame, alpha=scale, beta=0)
+        frame = cv2.convertScaleAbs(frame, alpha=1.5, beta=50)
         # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
