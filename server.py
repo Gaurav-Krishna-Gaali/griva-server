@@ -25,7 +25,7 @@ picam2.set_controls({"AwbMode": 1})
 def generate_frames():
     while True:
         frame = picam2.capture_array()
-        # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
 
