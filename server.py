@@ -9,7 +9,7 @@ app = Flask(__name__)
 # Initialize Picamera2
 picam2 = Picamera2()
 # video_config = picam2.create_video_configuration(main={"size": (640, 480)})
-video_config = picam2.create_video_configuration(main={"size": (1920, 1080), "format": "BGR888"})
+video_config = picam2.create_video_configuration(main={"size": (1920, 1080), "format": "RGB888"})
 picam2.configure(video_config)
 picam2.set_controls({"AfMode": 1, "FrameRate": 30})
 picam2.start()
@@ -17,7 +17,8 @@ picam2.start()
 def generate_frames():
     while True:
         frame = picam2.capture_array()
-        scale = 153 / 255.0
+        # scale = 153 / 255.0
+        scale = 1.0
         frame = cv2.convertScaleAbs(frame, alpha=scale, beta=0)
         # frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)  # Fix weird colors
         ret, buffer = cv2.imencode('.jpg', frame)
