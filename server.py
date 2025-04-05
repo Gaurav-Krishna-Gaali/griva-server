@@ -4,7 +4,7 @@ import cv2
 from libcamera import controls
 
 # Setup Flask
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Initialize Picamera2
 picam2 = Picamera2()
