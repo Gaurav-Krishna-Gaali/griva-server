@@ -11,7 +11,7 @@ picam2 = Picamera2()
 # video_config = picam2.create_video_configuration(main={"size": (640, 480)})
 video_config = picam2.create_video_configuration(main={"size": (1920, 1080), "format": "BGR888"})
 picam2.configure(video_config)
-self.picam2.set_controls({"AfMode": 1, "FrameRate": 30})
+picam2.set_controls({"AfMode": 1, "FrameRate": 30})
 picam2.start()
 
 def generate_frames():
