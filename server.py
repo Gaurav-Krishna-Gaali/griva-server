@@ -12,7 +12,12 @@ picam2 = Picamera2()
 video_config = picam2.create_video_configuration(main={"size": (1280, 800), "format": "BGR888"})
 picam2.configure(video_config)
 picam2.start()
-picam2.set_controls({"AwbMode": 1})
+# Set white balance to manual mode (0) and adjust gains to reduce yellow tint
+picam2.set_controls({
+    "AwbMode": 0,  # Manual white balance
+    "AnalogueGain": 1.0,  # Reduce overall gain
+    "ColourGains": (1.5, 2.0)  # Adjust red and blue gains to counter yellow tint
+})
 
 # Apply Auto White Balance
 picam2.set_controls({"AwbMode": 1})
